@@ -2415,7 +2415,7 @@ void Ast::eliminate_conditions(Function& function, std::vector<Statement*>& bloc
 					}
 					catch (...) {
 						print("\n" + bytecode.filePath + ":\nFailed to eliminate all test and copy conditions\n");
-						continue;
+						return;
 					}
 				}
 
@@ -2881,7 +2881,7 @@ void Ast::build_if_statements(Function& function, std::vector<Statement*>& block
 			}
 			catch (...) {
 				print("\n" + bytecode.filePath + ":\nFailed to build if statement\n");
-				continue;
+				return;
 			}
 			
 			block[i]->block.reserve(index - i);
