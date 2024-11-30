@@ -2410,13 +2410,12 @@ void Ast::eliminate_conditions(Function& function, std::vector<Statement*>& bloc
 				for (uint32_t j = index; j <= i; j++) {
 					try {
 						assert(!block[j]->assignment.variables.size(), "Failed to eliminate all test and copy conditions", bytecode.filePath, DEBUG_INFO);
-						conditionBuilder.add_node(conditionBuilder.get_node_type(block[j]->instruction.type, block[j]->condition.swapped),
-							block[j]->instruction.label, function.get_label_from_id(block[j]->instruction.target), &block[j]->assignment.expressions);
 					}
 					catch (...) {
 						print("\n" + bytecode.filePath + ":\nFailed to eliminate all test and copy conditions\n");
-						return;
 					}
+					conditionBuilder.add_node(conditionBuilder.get_node_type(block[j]->instruction.type, block[j]->condition.swapped),
+						block[j]->instruction.label, function.get_label_from_id(block[j]->instruction.target), &block[j]->assignment.expressions);
 				}
 
 				expressions.back() = conditionBuilder.build_condition();
@@ -2881,7 +2880,7 @@ void Ast::build_if_statements(Function& function, std::vector<Statement*>& block
 			}
 			catch (...) {
 				print("\n" + bytecode.filePath + ":\nFailed to build if statement\n");
-				return;
+				continue;
 			}
 			
 			block[i]->block.reserve(index - i);
